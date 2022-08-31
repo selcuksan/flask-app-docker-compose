@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  web:
+    build: .
+    container_name: web
+    ports:
+      - 8000:5000
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+  redis:
+    image: redis
+    container_name: redis
