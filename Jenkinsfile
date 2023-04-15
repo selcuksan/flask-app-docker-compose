@@ -14,6 +14,7 @@ pipeline {
         stage("deploy"){
             steps{
                 echo "deploying the application"
+                sh 'docker-compose.yml up'
             }
         }
     }
