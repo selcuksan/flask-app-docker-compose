@@ -1,23 +1,26 @@
 pipeline {
-    agent {
-        label 'slave-ubuntu'
+  agent any
+  stages {
+    stage("verify tooling") {
+      steps {
+        sh '''
+          docker version
+          docker info
+          docker compose version 
+        '''
+      }
     }
-    stages {
-        stage("build"){
-            steps{
-                echo "building the application"
-            }
-        }
-        stage("test"){
-            steps{
-                echo "testing the application"
-            }
-        }
-        stage("deploy"){
-            steps{
-                echo "deploying the application"
-                sh 'docker-compose up'
-            }
-        }
+    stage('Start container') {
+      steps {
+        sh 'docker compose up -d --no-color --wait'
+        sh 'docker compose ps'
+      }
     }
+  }
+  post {
+    always {
+      sh 'docker compose down --remove-orphans -v'
+      sh 'docker compose ps'
+    }
+  }
 }
