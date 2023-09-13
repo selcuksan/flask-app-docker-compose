@@ -1,25 +1,27 @@
 pipeline {
   agent any
   stages {
-    stage("verify tooling") {
+    stage("build") {
       steps {
         sh '''
-          docker version
-          docker info
-          docker-compose version 
+          sh 'echo "build stage"'
         '''
       }
     }
-    stage('Start container') {
+    stage('test') {
       steps {
-        sh 'docker-compose up -d --no-color --wait'
-        sh 'docker-compose ps'
+         sh 'echo "test stage"'
+      }
+    }
+    stage('deploy') {
+      steps {
+         sh 'echo "deploy stage"'
       }
     }
   }
   post {
     always {
-      sh 'docker-compose ps'
+       sh 'echo "Deployment Gerçekleşti"'
     }
   }
 }
