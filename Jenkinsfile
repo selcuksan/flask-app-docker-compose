@@ -17,9 +17,4 @@ pipeline {
       }
     }
   }
-  post {
-    always {
-       sh 'echo "Deployment Gerçekleşti"'
-    }
-  }
 }
